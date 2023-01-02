@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "2f0e29e4-43a6-47d5-b092-220724190e38",
 		"name": "integration-test",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -15,26 +15,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Bruno Onofre\",\r\n    \"age\" : \"26\"\r\n}",
+							"raw": "{\r\n    \"name\" : \"Bruno Onofre\",\r\n    \"age\"  : \"26\",\r\n    \"cpf\"  : \"954.015.470-72\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/cliente",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"cliente"
-							]
-						}
+						"url": "http://localhost:8080/api/v1/cliente"
 					},
 					"response": []
 				},
@@ -43,20 +31,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/cliente/0a824db2-23cd-4889-a258-938f20c1d4f7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"cliente",
-								"0a824db2-23cd-4889-a258-938f20c1d4f7"
-							]
-						}
+						"url": "http://localhost:8080/api/v1/cliente/0a824db2-23cd-4889-a258-938f20c1d4f7"
 					},
 					"response": []
 				},
@@ -65,20 +40,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/cliente/0a824db2-23cd-4889-a258-938f20c1d4f7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"cliente",
-								"0a824db2-23cd-4889-a258-938f20c1d4f7"
-							]
-						}
+						"url": "http://localhost:8080/api/v1/cliente/0a824db2-23cd-4889-a258-938f20c1d4f7"
 					},
 					"response": []
 				},
@@ -99,19 +61,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/cliente",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"cliente"
-							]
-						}
+						"url": "http://localhost:8080/api/v1/cliente"
 					},
 					"response": []
 				},
@@ -129,20 +79,262 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/cliente/0a824db2-23cd-4889-a258-938f20c1d4f7",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"cliente",
-								"0a824db2-23cd-4889-a258-938f20c1d4f7"
-							]
-						}
+						"url": "http://localhost:8080/api/v1/cliente/55362e32-caa6-4490-9329-381a3e6ab7df"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderController",
+			"item": [
+				{
+					"name": "salvar pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\" : \"0c9c15dd-59ca-46ea-8197-7243dba681b2\",\r\n    \"total\" : 2000,\r\n    \"orderItems\" : [\r\n          {\r\n            \"uuidProduct\" : \"1346e618-0ad0-4136-bcdc-7b8c05768772\",\r\n            \"amount\"  : 2\r\n          }\r\n     ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/pedido"
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por uuid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/pedido/d89613a3-9a14-4f5a-ba35-b87fc95f7ef7"
+					},
+					"response": []
+				},
+				{
+					"name": "atualiza status",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/pedido/435dcc0b-52a4-464f-8f79-9cabff8cc318"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductController",
+			"item": [
+				{
+					"name": "salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\" : \"Video Game\",\r\n    \"description\" : \"X-Box 360 with gamepass by 1 year free.\",\r\n    \"unitValue\"   : 740.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/produto"
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/produto/8cb67783-d600-4d6c-957f-4bd515d6cfa2"
+					},
+					"response": []
+				},
+				{
+					"name": "busca paginada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/produto"
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\" : \"Television\",\r\n    \"description\" : \"42 of size, sangung.\",\r\n    \"unitValue\"   : 1600.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/produto/8cb67783-d600-4d6c-957f-4bd515d6cfa2"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserController",
+			"item": [
+				{
+					"name": "Salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"bruno.onofre\",\r\n    \"role\"  : \"ADMIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/usuario"
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/usuario/e1d93db6-4f28-4ec3-ba2b-a5d5084bf1f5"
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" : \"bruno.onofre\",\r\n    \"role\"  : \"MANAGER\",\r\n    \"employeeUuid\" : \"bcd5e5e7-13b1-4e39-918f-5190d1c4e025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/usuario/e1d93db6-4f28-4ec3-ba2b-a5d5084bf1f5"
+					},
+					"response": []
+				},
+				{
+					"name": "deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/usuario/e1d93db6-4f28-4ec3-ba2b-a5d5084bf1f5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EmployeeController",
+			"item": [
+				{
+					"name": "sallvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\"  : \"Bruno Onofre\",\r\n\"email\" : \"brunoonofre@email.com\",\r\n\"cpf\"   : \"403.742.260-32\",\r\n\"userUuid\" : \"dcf3dbe0-bf8e-45b1-8594-c32300201f13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/funcionario"
+					},
+					"response": []
+				},
+				{
+					"name": "buscar por uuid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/funcionario/0455b65e-8f78-4d25-af5d-bf72f4d25790"
+					},
+					"response": []
+				},
+				{
+					"name": "busca paginada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/funcionario"
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\"  : \"Bruno Roberto Onofre\",\r\n\"email\" : \"brunoonofre@email.com\",\r\n\"cpf\"   : \"403.742.260-32\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/v1/funcionario/6810003f-9e57-43d6-b271-c193b41f53c6"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/v1/funcionario/6810003f-9e57-43d6-b271-c193b41f53c6"
 					},
 					"response": []
 				}
