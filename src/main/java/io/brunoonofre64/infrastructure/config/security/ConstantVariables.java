@@ -8,16 +8,14 @@ public interface ConstantVariables {
 
     String EMPLOYEE = "EMPLOYEE";
 
-    interface WEB_REQUEST{
-        String V1_CUSTOMER = "/api/v1/cliente/**";
+    String WEB_REQUEST_V1_CUSTOMER = "/api/v1/cliente/**";
 
-        String V1_EMPLOYEE = "/api/v1/funcionario/**";
+    String WEB_REQUEST_V1_EMPLOYEE = "/api/v1/funcionario/**";
 
-        String V1_ORDER = "/api/v1/pedido/**";
+    String WEB_REQUEST_V1_ORDER = "/api/v1/pedido/**";
 
-        String V1_PRODUCT = "/api/v1/produto/**";
+    String WEB_REQUEST_V1_PRODUCT = "/api/v1/produto/**";
 
-        String V1_USER = "/api/v1/usuario/**";
-    }
+    String WEB_REQUEST_V1_USER = "/api/v1/usuario/**";
 
 }
