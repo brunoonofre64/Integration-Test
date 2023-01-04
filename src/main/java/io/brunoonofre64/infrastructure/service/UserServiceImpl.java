@@ -6,14 +6,19 @@ import io.brunoonofre64.domain.entities.UserEntity;
 import io.brunoonofre64.domain.enums.CodeMessage;
 import io.brunoonofre64.domain.exception.DtoNullOrIsEmptyException;
 import io.brunoonofre64.domain.exception.ListIsEmptyException;
+import io.brunoonofre64.domain.exception.LoginNotFoundException;
 import io.brunoonofre64.domain.exception.UuidNotFoundOrNullException;
 import io.brunoonofre64.domain.mapper.UserMapper;
-import io.brunoonofre64.domain.service.UserService;
 import io.brunoonofre64.infrastructure.jpa.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -21,15 +26,34 @@ import javax.transaction.Transactional;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserDetailsService {
 
     private UserRepository userRepository;
+
+    private PasswordEncoder passwordEncoder;
 
     private UserMapper mapper;
 
     @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        if(!userRepository.existsByLogin(login) || ObjectUtils.isEmpty(login)) {
+            throw new LoginNotFoundException(CodeMessage.LOGIN_NOT_FOUND);
+        }
+        UserEntity userEntity = userRepository.findByLogin(login);
+
+        return User
+                .builder()
+                .username(userEntity.getLogin())
+                .password(userEntity.getPassword())
+                .roles(userEntity.getRole().name())
+                .build();
+    }
+
     public UserOutpuDTO saveNewUserIndDB(UserInputDTO userDTO) {
         validateUser(userDTO);
+
+        String criptPassword = passwordEncoder.encode(userDTO.getPassword());
+        userDTO.setPassword(criptPassword);
 
         UserEntity entity = mapper.convertDTOToEntity(userDTO);
 
@@ -38,7 +62,6 @@ public class UserServiceImpl implements UserService {
         return mapper.convertEntityToDTO(entity);
     }
 
-    @Override
     public UserOutpuDTO getUserByUuid(String uuid) {
         validateUserUuid(uuid);
         UserEntity user = userRepository.findByUuid(uuid);
@@ -46,7 +69,6 @@ public class UserServiceImpl implements UserService {
         return mapper.convertEntityToDTO(user);
     }
 
-    @Override
     public Page<UserOutpuDTO> getAllUserPaged(Pageable pageable) {
         if(userRepository.findAll(pageable).isEmpty()) {
             throw new ListIsEmptyException(CodeMessage.LIST_IS_EMPTY);
@@ -58,7 +80,6 @@ public class UserServiceImpl implements UserService {
         return mapper.mapPagesUserEntityToDTO(userList);
     }
 
-    @Override
     public UserOutpuDTO updateUserByUui(String uuid, UserInputDTO dto) {
         validateUserUuid(uuid);
         validateUser(dto);
@@ -73,7 +94,6 @@ public class UserServiceImpl implements UserService {
         return mapper.convertEntityToDTO(user);
     }
 
-    @Override
     @Transactional
     public void deleteUserByUuid(String uuid) {
         validateUserUuid(uuid);

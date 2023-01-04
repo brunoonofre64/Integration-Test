@@ -2,7 +2,7 @@ package io.brunoonofre64.api.v1.controller;
 
 import io.brunoonofre64.domain.dto.user.UserInputDTO;
 import io.brunoonofre64.domain.dto.user.UserOutpuDTO;
-import io.brunoonofre64.domain.service.UserService;
+import io.brunoonofre64.infrastructure.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/usuario")
 public class UserController {
 
-    private UserService service;
+    private UserServiceImpl service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
