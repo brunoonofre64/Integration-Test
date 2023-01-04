@@ -1,5 +1,6 @@
-package io.brunoonofre64.infrastructure.config;
+package io.brunoonofre64.infrastructure.config.security;
 
+import io.brunoonofre64.infrastructure.config.security.ConstantVariables.WEB_REQUEST;
 import io.brunoonofre64.infrastructure.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static io.brunoonofre64.infrastructure.config.security.ConstantVariables.*;
 
 @EnableWebSecurity
 @AllArgsConstructor
@@ -33,6 +36,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers();
+                .antMatchers(WEB_REQUEST.V1_CUSTOMER)
+                   .permitAll()
+                .antMatchers(WEB_REQUEST.V1_EMPLOYEE)
+                  .hasAnyRole(ADMIN, MANAGER)
+                .antMatchers(WEB_REQUEST.V1_ORDER)
+                  .hasAnyRole(ADMIN, MANAGER)
+                .antMatchers(WEB_REQUEST.V1_PRODUCT)
+                  .hasAnyRole(ADMIN, MANAGER, EMPLOYEE)
+                .antMatchers(WEB_REQUEST.V1_USER)
+                  .hasAnyRole(ADMIN)
+                .anyRequest().authenticated()
+                .and().httpBasic();
     }
 }
