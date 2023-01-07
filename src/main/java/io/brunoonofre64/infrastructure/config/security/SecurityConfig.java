@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            "/login"
     };
 
     @Override
@@ -46,11 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
            http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
            http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
            http.authorizeRequests().anyRequest().authenticated();
+
+           //autenticacao
+        http.addFilter(new CustomAuthenticationFilterConfig(authenticationManager()));
     }
 
     @Bean
     @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
+    public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManagerBean();
     }
 }
